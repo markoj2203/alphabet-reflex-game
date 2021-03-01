@@ -1,13 +1,37 @@
 import React, { useState } from "react";
+import alphabetLetters from "../alphabet";
 
 export default function Game() {
-  const [isChecked, setIsChecked] = useState("");
+  const [isChecked, setIsChecked] = useState("easy");
+  const [randomNum, setRandomNum] = useState(0);
 
   const switchDifficulty = (event) => {
     setIsChecked(event.currentTarget.id);
+    setRandomNum(0);
   };
 
-  const startGame = (diff) => {};
+  const startGame = (diff) => {
+    const numItems = [];
+    alphabetLetters.map((item) => {
+      if (item.class === "left") {
+        numItems.push(item.number);
+      }
+      return numItems;
+    });
+    if (diff === "easy") {
+      setInterval(function () {
+        setRandomNum(numItems[Math.floor(Math.random() * numItems.length)]);
+      }, 5000);
+    } else if (diff === "medium") {
+      setInterval(function () {
+        setRandomNum(numItems[Math.floor(Math.random() * numItems.length)]);
+      }, 3500);
+    } else {
+      setInterval(function () {
+        setRandomNum(numItems[Math.floor(Math.random() * numItems.length)]);
+      }, 2000);
+    }
+  };
   return (
     <>
       <div className="center-content">
@@ -17,7 +41,7 @@ export default function Game() {
             type="radio"
             name="flexRadioDefault"
             id="easy"
-            checked={isChecked === "easy" || isChecked === ""}
+            checked={isChecked === "easy"}
             onChange={switchDifficulty}
           />
           <label className="form-check-label" htmlFor="flexRadioDefault1">
@@ -61,7 +85,7 @@ export default function Game() {
         </button>
       </div>
       <div className="center-content">
-        <h1>{17}</h1>
+        <h1>{randomNum === 0 ? "" : randomNum}</h1>
       </div>
     </>
   );
