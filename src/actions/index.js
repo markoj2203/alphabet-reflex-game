@@ -4,3 +4,10 @@ export const setRandomNumber = (randomNumber) => {
     payload: randomNumber,
   };
 };
+
+export const scoreTable = (score) => {
+  return {
+    type: "RANDOM_NUMBER",
+    payload: score,
+  };
+};

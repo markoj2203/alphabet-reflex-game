@@ -1,14 +1,49 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import alphabetLetters from "../alphabet";
 
 export default function Letters() {
   const [lettersArray, setLettersArray] = useState(alphabetLetters);
-  const [letter, setLetter] = useState("");
+  const num = useSelector((state) => state.setRandomNumber.randomNumber);
+  const dispatch = useDispatch();
 
   const compareLetter = (event) => {
     //on enter check number and letter
     if (event.keyCode === 13) {
-      setLetter(event.currentTarget.value);
+      lettersArray.map((item) => {
+        if (
+          item.number === num &&
+          item.letter === event.currentTarget.value.toUpperCase()
+        ) {
+          item.class = "hit";
+        }
+        if (
+          item.number === num &&
+          item.letter !== event.currentTarget.value.toUpperCase()
+        ) {
+          item.class = "miss";
+        }
+        return lettersArray;
+      });
+      setLettersArray(lettersArray);
+      let scoreM = lettersArray.filter((val) => {
+        if (val.class === "miss") {
+          return val.class;
+        }
+        return lettersArray;
+      });
+      let scoreH = lettersArray.filter((val) => {
+        if (val.class === "hit") {
+          return val.class;
+        }
+        return lettersArray;
+      });
+      let scoreLeft = 26 - (scoreM + scoreH);
+
+      dispatch({
+        type: "SCORE_TABLE",
+        score: { hit: scoreH, miss: scoreM, left: scoreLeft },
+      });
     }
   };
 
