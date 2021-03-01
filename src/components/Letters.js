@@ -6,8 +6,9 @@ export default function Letters() {
   const [letter, setLetter] = useState("");
 
   const compareLetter = (event) => {
+    //on enter check number and letter
     if (event.keyCode === 13) {
-      console.log(event.currentTarget.value);
+      setLetter(event.currentTarget.value);
     }
   };
 

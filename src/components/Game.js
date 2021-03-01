@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import alphabetLetters from "../alphabet";
 
 export default function Game() {
   const [isChecked, setIsChecked] = useState("easy");
   const [randomNum, setRandomNum] = useState(0);
+  const dispatch = useDispatch();
 
   const switchDifficulty = (event) => {
     setIsChecked(event.currentTarget.id);
@@ -18,17 +20,38 @@ export default function Game() {
       }
       return numItems;
     });
+    let initN = numItems[Math.floor(Math.random() * numItems.length)];
+    setRandomNum(initN);
+    dispatch({
+      type: "RANDOM_NUMBER",
+      randomNumber: initN,
+    });
     if (diff === "easy") {
       setInterval(function () {
-        setRandomNum(numItems[Math.floor(Math.random() * numItems.length)]);
+        let easyN = numItems[Math.floor(Math.random() * numItems.length)];
+        setRandomNum(easyN);
+        dispatch({
+          type: "RANDOM_NUMBER",
+          randomNumber: easyN,
+        });
       }, 5000);
     } else if (diff === "medium") {
       setInterval(function () {
-        setRandomNum(numItems[Math.floor(Math.random() * numItems.length)]);
+        let mediumN = numItems[Math.floor(Math.random() * numItems.length)];
+        setRandomNum(mediumN);
+        dispatch({
+          type: "RANDOM_NUMBER",
+          randomNumber: mediumN,
+        });
       }, 3500);
     } else {
       setInterval(function () {
-        setRandomNum(numItems[Math.floor(Math.random() * numItems.length)]);
+        let hardN = numItems[Math.floor(Math.random() * numItems.length)];
+        setRandomNum(hardN);
+        dispatch({
+          type: "RANDOM_NUMBER",
+          randomNumber: hardN,
+        });
       }, 2000);
     }
   };
