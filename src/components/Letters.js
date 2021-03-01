@@ -36,6 +36,7 @@ export default function Letters() {
           return val.class;
         }
       });
+
       let scoreLeft = 26 - (scoreM.length + scoreH.length);
 
       dispatch({

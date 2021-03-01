@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import alphabetLetters from "../alphabet";
 
 export default function Game() {
   const [isChecked, setIsChecked] = useState("easy");
   const [randomNum, setRandomNum] = useState(0);
+
+  const [alphabet, setAlphabet] = useState(alphabetLetters);
   const dispatch = useDispatch();
 
   const switchDifficulty = (event) => {
@@ -14,12 +16,14 @@ export default function Game() {
 
   const startGame = (diff) => {
     const numItems = [];
-    alphabetLetters.map((item) => {
+
+    alphabet.map((item) => {
       if (item.class === "left") {
         numItems.push(item.number);
       }
       return numItems;
     });
+
     let initN = numItems[Math.floor(Math.random() * numItems.length)];
     setRandomNum(initN);
     dispatch({
