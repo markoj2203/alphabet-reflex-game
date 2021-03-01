@@ -30,19 +30,17 @@ export default function Letters() {
         if (val.class === "miss") {
           return val.class;
         }
-        return lettersArray;
       });
       let scoreH = lettersArray.filter((val) => {
         if (val.class === "hit") {
           return val.class;
         }
-        return lettersArray;
       });
-      let scoreLeft = 26 - (scoreM + scoreH);
+      let scoreLeft = 26 - (scoreM.length + scoreH.length);
 
       dispatch({
         type: "SCORE_TABLE",
-        score: { hit: scoreH, miss: scoreM, left: scoreLeft },
+        score: { hit: scoreH.length, miss: scoreM.length, left: scoreLeft },
       });
     }
   };
