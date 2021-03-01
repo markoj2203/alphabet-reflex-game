@@ -1,54 +1,45 @@
-import React, { useState } from "react";
+import React from "react";
+import Game from "./Game";
+import Letters from "./Letters";
+import Score from "./Score";
 
 function App() {
-  const [isChecked, setIsChecked] = useState("");
-
-  const switchDifficulty = (event) => {
-    setIsChecked(event.currentTarget.id);
-  };
+  const alphabetLetters = [
+    {
+      number: 1,
+      letter: "A",
+      class: "left",
+    },
+    {
+      number: 2,
+      letter: "B",
+      class: "left",
+    },
+    {
+      number: 3,
+      letter: "C",
+      class: "left",
+    },
+    {
+      number: 4,
+      letter: "D",
+      class: "left",
+    },
+    {
+      number: 5,
+      letter: "E",
+      class: "left",
+    },
+  ];
 
   return (
     <div className="container">
-      <div className="main-content">
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="flexRadioDefault"
-            id="easy"
-            checked={isChecked === "easy" || isChecked === ""}
-            onChange={switchDifficulty}
-          />
-          <label className="form-check-label" htmlFor="flexRadioDefault1">
-            Easy
-          </label>
-        </div>
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="flexRadioDefault"
-            id="medium"
-            checked={isChecked === "medium"}
-            onChange={switchDifficulty}
-          />
-          <label className="form-check-label" htmlFor="flexRadioDefault2">
-            Medium
-          </label>
-        </div>
-        <div className="form-check">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="flexRadioDefault"
-            id="hard"
-            checked={isChecked === "hard"}
-            onChange={switchDifficulty}
-          />
-          <label className="form-check-label" htmlFor="flexRadioDefault3">
-            Hard
-          </label>
-        </div>
+      <div className="content-left">
+        <Game />
+        <Letters />
+      </div>
+      <div className="content-right">
+        <Score />
       </div>
     </div>
   );
