@@ -10,15 +10,17 @@ export default function Game() {
   const num = useSelector((state) => state.setRandomNumber.number);
   const numCh = num === undefined ? randomNum : num;
   const alphabet = alphabetLeft === undefined ? alphabetLetters : alphabetLeft;
+  let interval;
 
   const dispatch = useDispatch();
 
-  const switchDifficulty = (event) => {
+  const switchDifficulty = (event, interval) => {
+    clearInterval(interval);
     setIsChecked(event.currentTarget.id);
     setRandomNum(0);
   };
   //start game will randomly generates number from aray in time interval
-  const startGame = (diff) => {
+  const startGame = (diff, interval) => {
     dispatch({ type: "LEVEL_CHANGES", level: diff });
     const numItems = [];
     alphabet.map((item) => {
@@ -35,12 +37,12 @@ export default function Game() {
       randomNumber: initN,
     });
 
-    randomByTime(diff, numItems, numCh);
+    randomByTime(diff, numItems, numCh, interval);
   };
   //get random time from array of numbers and diff level
-  const randomByTime = (isChecked, arr, num) => {
+  const randomByTime = (isChecked, arr, num, interval) => {
     let time = timestampByDifficulty(isChecked);
-    setInterval(function () {
+    interval = setInterval(function () {
       let numR = 0;
       if (num === 0) {
         numR = arr[Math.floor(Math.random() * arr.length)];
@@ -54,7 +56,6 @@ export default function Game() {
       });
     }, time);
   };
-
   return (
     <>
       <div className="center-content">
@@ -91,7 +92,7 @@ export default function Game() {
             name="flexRadioDefault"
             id="hard"
             checked={isChecked === "hard"}
-            onChange={switchDifficulty}
+            onChange={() => switchDifficulty(Event, interval)}
           />
           <label className="form-check-label" htmlFor="flexRadioDefault3">
             Hard
@@ -102,7 +103,7 @@ export default function Game() {
         <button
           type="button"
           className="btn btn-outline-primary"
-          onClick={() => startGame(isChecked)}
+          onClick={() => startGame(isChecked, interval)}
         >
           Start
         </button>
