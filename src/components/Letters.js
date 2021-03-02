@@ -58,12 +58,14 @@ export default function Letters() {
         type: "LEFT_ALPHABET_NUMBER",
         alphabet: leftNumbers,
       });
+      document.getElementById("letter").value = "";
     }
   };
   return (
     <>
       <div className="center-content">
         <input
+          id="letter"
           type="text"
           className="formGroup"
           placeholder="Input Letter"
