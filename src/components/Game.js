@@ -30,35 +30,29 @@ export default function Game() {
       type: "RANDOM_NUMBER",
       randomNumber: initN,
     });
-    if (diff === "easy") {
-      setInterval(function () {
-        let easyN = numItems[Math.floor(Math.random() * numItems.length)];
-        setRandomNum(easyN);
-        dispatch({
-          type: "RANDOM_NUMBER",
-          randomNumber: easyN,
-        });
-      }, 5000);
-    } else if (diff === "medium") {
-      setInterval(function () {
-        let mediumN = numItems[Math.floor(Math.random() * numItems.length)];
-        setRandomNum(mediumN);
-        dispatch({
-          type: "RANDOM_NUMBER",
-          randomNumber: mediumN,
-        });
-      }, 3500);
-    } else {
-      setInterval(function () {
-        let hardN = numItems[Math.floor(Math.random() * numItems.length)];
-        setRandomNum(hardN);
-        dispatch({
-          type: "RANDOM_NUMBER",
-          randomNumber: hardN,
-        });
-      }, 2000);
-    }
+
+    randomByTime(diff, numItems);
   };
+
+  const randomByTime = (isChecked, arr) => {
+    let time = 3000;
+    if (isChecked === "easy") {
+      time = 5000;
+    } else if (isChecked === "medium") {
+      time = 3500;
+    } else {
+      time = 2000;
+    }
+    setInterval(function () {
+      let num = arr[Math.floor(Math.random() * arr.length)];
+      setRandomNum(num);
+      dispatch({
+        type: "RANDOM_NUMBER",
+        randomNumber: num,
+      });
+    }, time);
+  };
+
   return (
     <>
       <div className="center-content">
