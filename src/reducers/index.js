@@ -18,9 +18,19 @@ const scoreTable = (state = {}, action) => {
   }
 };
 
+const leftNumbers = (state = {}, action) => {
+  switch (action.type) {
+    case "LEFT_ALPHABET_NUMBER":
+      return { ...state, alphabet: action.alphabet };
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   setRandomNumber,
   scoreTable,
+  leftNumbers,
 });
 
 export default rootReducer;

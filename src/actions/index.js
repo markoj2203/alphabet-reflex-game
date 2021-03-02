@@ -11,3 +11,10 @@ export const scoreTable = (score) => {
     payload: score,
   };
 };
+
+export const leftNumbers = (alphabet) => {
+  return {
+    type: "LEFT_ALPHABET_NUMBER",
+    payload: alphabet,
+  };
+};

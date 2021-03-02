@@ -26,26 +26,22 @@ export default function Letters() {
         return lettersArray;
       });
       setLettersArray(lettersArray);
-      let scoreM = lettersArray.filter((val) => {
-        if (val.class === "miss") {
-          return val.class;
-        }
-      });
-      let scoreH = lettersArray.filter((val) => {
-        if (val.class === "hit") {
-          return val.class;
-        }
-      });
-
+      let scoreM = lettersArray.filter((val) => val.class === "miss");
+      let scoreH = lettersArray.filter((val) => val.class === "hit");
+      let leftNumbers = lettersArray.filter((val) => val.class === "left");
       let scoreLeft = 26 - (scoreM.length + scoreH.length);
 
       dispatch({
         type: "SCORE_TABLE",
         score: { hit: scoreH.length, miss: scoreM.length, left: scoreLeft },
       });
+
+      dispatch({
+        type: "LEFT_ALPHABET_NUMBER",
+        alphabet: leftNumbers,
+      });
     }
   };
-
   return (
     <>
       <div className="center-content">
