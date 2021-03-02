@@ -27,10 +27,20 @@ const leftNumbers = (state = {}, action) => {
   }
 };
 
+const levelChanges = (state = "", action) => {
+  switch (action.type) {
+    case "LEVEL_CHANGES":
+      return { ...state, level: action.level };
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   setRandomNumber,
   scoreTable,
   leftNumbers,
+  levelChanges,
 });
 
 export default rootReducer;

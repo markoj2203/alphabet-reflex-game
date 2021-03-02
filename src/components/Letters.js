@@ -7,6 +7,22 @@ export default function Letters() {
   const num = useSelector((state) => state.setRandomNumber.randomNumber);
   const dispatch = useDispatch();
 
+  //get random time from array of numbers and diff level
+  const randomByTime = (arr) => {
+    const numItems = [];
+    arr.map((item) => {
+      if (item.class === "left") {
+        numItems.push(item.number);
+      }
+      return numItems;
+    });
+    let initN = numItems[Math.floor(Math.random() * numItems.length)];
+    dispatch({
+      type: "RANDOM_NUMBER",
+      randomNumber: initN,
+    });
+  };
+
   const compareLetter = (event) => {
     //on enter check number and letter
     if (event.keyCode === 13) {
@@ -30,6 +46,8 @@ export default function Letters() {
       let scoreH = lettersArray.filter((val) => val.class === "hit");
       let leftNumbers = lettersArray.filter((val) => val.class === "left");
       let scoreLeft = 26 - (scoreM.length + scoreH.length);
+
+      randomByTime(leftNumbers);
 
       dispatch({
         type: "SCORE_TABLE",

@@ -18,3 +18,10 @@ export const leftNumbers = (alphabet) => {
     payload: alphabet,
   };
 };
+
+export const levelChanges = (level) => {
+  return {
+    type: "LEVEL_CHANGES",
+    payload: level,
+  };
+};

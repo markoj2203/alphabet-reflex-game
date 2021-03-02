@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import alphabetLetters from "../alphabet";
+import { timestampByDifficulty } from "../function";
 
 export default function Game() {
   const [isChecked, setIsChecked] = useState("easy");
   const [randomNum, setRandomNum] = useState(0);
   const alphabetLeft = useSelector((state) => state.leftNumbers.alphabet);
+  const num = useSelector((state) => state.setRandomNumber.number);
+  const numCh = num === undefined ? randomNum : num;
   const alphabet = alphabetLeft === undefined ? alphabetLetters : alphabetLeft;
 
   const dispatch = useDispatch();
@@ -14,8 +17,9 @@ export default function Game() {
     setIsChecked(event.currentTarget.id);
     setRandomNum(0);
   };
-
+  //start game will randomly generates number from aray in time interval
   const startGame = (diff) => {
+    dispatch({ type: "LEVEL_CHANGES", level: diff });
     const numItems = [];
     alphabet.map((item) => {
       if (item.class === "left") {
@@ -31,24 +35,22 @@ export default function Game() {
       randomNumber: initN,
     });
 
-    randomByTime(diff, numItems);
+    randomByTime(diff, numItems, numCh);
   };
-
-  const randomByTime = (isChecked, arr) => {
-    let time = 3000;
-    if (isChecked === "easy") {
-      time = 5000;
-    } else if (isChecked === "medium") {
-      time = 3500;
-    } else {
-      time = 2000;
-    }
+  //get random time from array of numbers and diff level
+  const randomByTime = (isChecked, arr, num) => {
+    let time = timestampByDifficulty(isChecked);
     setInterval(function () {
-      let num = arr[Math.floor(Math.random() * arr.length)];
-      setRandomNum(num);
+      let numR = 0;
+      if (num === 0) {
+        numR = arr[Math.floor(Math.random() * arr.length)];
+      } else {
+        numR = num;
+      }
+      setRandomNum(numR);
       dispatch({
         type: "RANDOM_NUMBER",
-        randomNumber: num,
+        randomNumber: numR,
       });
     }, time);
   };
@@ -106,7 +108,7 @@ export default function Game() {
         </button>
       </div>
       <div className="center-content">
-        <h1>{randomNum === 0 ? "" : randomNum}</h1>
+        <h1>{numCh === 0 ? "" : numCh}</h1>
       </div>
     </>
   );
